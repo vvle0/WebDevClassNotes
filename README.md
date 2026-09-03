@@ -1,2 +1,2 @@
 # WebDevClassNotes
-## Fall Into to Web Development Notes
+## Fall Intro to Web Development Notes
