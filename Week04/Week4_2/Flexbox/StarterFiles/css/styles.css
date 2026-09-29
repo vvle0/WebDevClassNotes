@@ -1,0 +1,169 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* Display flex is applied to the parent container, aka the thing that contains the flex items. Flex direction defaults to row. */
+/* Flex-wrap defaults to nowrap, meaning items will not wrap to a new line when they overflow aka they squish. */
+/* Justify content - applied to the container/element that displays flex (main axis). */
+/* Align items - applied to the container/element that displays flex (cross axis). */
+/* Align-item defaults to stretch (which fills the parent container height) unless the flex-items have a specific alignment set. */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  /* If you want your items to wrap/stack on a new line when they overflow, you have to say flex-wrap: wrap;. Default behavior is to squish/flex each item to fit in a row. */
+  flex-wrap: wrap;
+  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.1);
+  min-height: 400px;
+}
+
+.item {
+  width: 21%;
+  height: 300px;
+  border: 1px solid black;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Variations using automic CSS */
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-even {
+  justify-content: space-evenly;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+/* Align items get applied to the cross axis */
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-stretch {
+  align-items: stretch;
+}
+
+/* Any element that is a direct ascendant of an element that has the class align-stretch. */
+.align-stretch > * {
+  height: auto;
+}
+
+.align-self {
+  align-self: stretch;
+  height: auto;
+}
+
+/* Classic Layout Example */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: 0 5%;
+  min-height: 100px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* This is the box around the 2 items we want to stack next to eachother. */
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.grid-item {
+  width: 23%;
+}
+
+.secondary-nav {
+  min-width: 25%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* No commas mean we are looking for the html pattern of li inside of another element. */
+.menu li {
+  border-bottom: 1px solid grey;
+}
+
+.menu span {
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+.menu a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.menu a:hover {
+  background-color:rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  min-height: 100px;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

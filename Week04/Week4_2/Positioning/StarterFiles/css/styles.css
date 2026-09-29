@@ -1,0 +1,59 @@
+/* / Load fonts variables and other stylesheets first */
+
+/* Grouped selector, think list of selectors to apply these styles to. */
+html, body {
+    margin: 0;
+}
+
+/* Generic styles so we can see our div elements and how they nest. */
+div, header {
+    /* Border shorthand assigns 3 values at once: border-width, border-style, border-color. */
+    border: 1px solid blue;
+    padding: 50px;
+}
+
+/* Absolute positioned elements without a positioned Parent/Ancestor = position = static. This is how absolutely positioned elements behave on their own. */
+.abs-no-parent {
+    background-color: cornflowerblue;
+    position: absolute;
+    top: 20%;
+    right: -200px;
+}
+
+.rel-parent {
+    background-color: blueviolet;
+    width: 50%;
+    /* height % doesn't work unless that element is inside of an element that has a defined height. VW or VH take a percentage of your screen's width or height. */
+    height: 200vh;
+    /* Whenver you want to absolutely position an element inside or relative to a parent element, that parent element must be positioned relative aka NOT DEFAULT (static). */
+    position: relative;
+}
+
+.abs-rel-parent {
+    background-color: rgba(255, 0, 0, 0.5);
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    bottom: 100px;
+    right: 0;
+}
+
+header {
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    background-color: coral;
+    /* Think layers in a drawing program. Positive Z pushes elements in front of others, negative sends them back from where they render by default. */
+    z-index: 10;
+}
+
+/* This is a great helper class to make an element cover the entire screen. */
+.cover {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
