@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+html {
+  font-family: "helvetica", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home {
+  text-decoration: none;
+  color: black;
+  font-size: 36px;
+  margin-top: -1px;
+}
+
+nav {
+  margin-top: 2px;
+  z-index: 100;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  gap: 50px;
+}
+
+nav a,
+.home {
+  text-decoration: none;
+  color: black;
+  position: relative;
+}
+
+nav a::after,
+.home::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: black;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+
+.home::after {
+  bottom: 17px;
+}
+
+nav a:hover::after,
+.home:hover::after {
+  width: 100%;
+}
+
+h1 {
+  font-family: "WindSong", cursive;
+}
+
+main {
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+  padding: 0 40px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  transform: translateY(-40px);
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.intro-text {
+  flex: 1;
+  animation: fadeIn 1s ease-out both;
+}
+
+h1 {
+  font-family: "Monsieur La Doulaise", cursive;
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+p {
+  max-width: 450px;
+  font-size: 18px;
+}
+
+.headshot {
+  width: 500px;
+  object-fit: cover;
+  animation: fadeIn 1s ease-out 0.25s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 15px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+footer a {
+  text-decoration: none;
+  color: black;
+  position: relative;
+}

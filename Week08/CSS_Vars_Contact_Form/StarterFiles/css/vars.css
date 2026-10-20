@@ -1,0 +1,24 @@
+/* We write this together in class. */
+/* imports on the top, this is where we import other styles */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+/* base styles converted to vars */
+/* define our vars in the :root selector which represents the document root */
+:root {
+  --c-bg: #e7e8f0;
+  --c-text: #475569;
+  --c-bg-btn: #1e293b;
+  --c-bg-btn-hover: #64748b;
+  --c-btn-text: #f8fafc;
+
+  --ff-heading: 'Press Start 2P', sans-serif;
+  --ff-body: 'Share Tech Mono', monospace;
+}
+
+#green {
+    --c-bg: #a7f3d0;
+    --c-text:#065f46;
+    --c-bg-btn: #059669;
+    --c-bg-btn-hover: #065f46;
+    --c-btn-text:#ecfdf5;
+}

@@ -5,14 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Responsive 101</title>
     <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+    
+    <script>
+
+      /*
+      // THIS VERSON USED THE ONCLICK ATTRIBUTE TO FIRE THE HIDE SHOW FUNCTION
+      // Declare a function with the name toggleShow
+      function toggleShow() {
+        // Grab our menu class ul and store it as a variable in js.
+        var menu = document.getElementById('menu');
+        // Log this menu in our console.
+        console.log(menu);
+        // Long way first, but it is more flexible when you add more to it.
+        // Does the menu have the class name 'show' in its classList?
+        // console.log(menu.classList)
+        // If our classList has the class, remove it.
+        if (menu.classList.contains('show')) {
+          menu.classList.remove('show');
+        } else {
+          //otherwise add the 'show' to the classList
+          menu.classList.add('show');
+        }
+      }
+
+      // To call the function in js
+      // toggleShow();
+      */
+
+      // This should begin 90% of the 35 code for HTML that you write in this class.
+      // addEventListener(EventToListenFor, functionToFireWhen that event happens)
+      document.addEventListener('DOMContentLoaded', function() {
+      //   document.getElementById('mobile-menu').addEventListener('click', toggleShow);
+
+        var hamburger = document.getElementById('mobile-menu');
+        hamburger.addEventListener('click', toggleShow);
+      });
+
+      function toggleShow() {
+        var menu = document.getElementById('menu');
+        menu.classList.toggle('show');
+      }
+
+    </script>
   </head>
   <body>
     <header>
       <h1 class="brand"><a href="#">Logo</a></h1>
       <!-- Hide this till we hit smaller screens! -->
-      <span class="mobile-menu">&#8801;</span>
+       <!-- If you don't use an event listener, you can apple one in the tag itself. -->
+      <!-- <span class="mobile-menu" onclick="toggleShow()">&#8801;</span> -->
       <nav>
-        <ul class="menu">
+        <ul class="menu" id="menu">
           <li><a href="#">Link 1</a></li>
           <li><a href="#">Link 2</a></li>
           <li><a href="#">Link 3</a></li>
