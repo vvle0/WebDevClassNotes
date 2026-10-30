@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Projects | Vy Le</title>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <header>
+            <a href="index.html" class="home">*</a>
+
+            <nav>
+                <ul>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="projects.html" class="active">Projects</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="projects-page">
+            <div class="projects">
+                <h1>Projects</h1>
+
+                <article class="project">
+                    <video
+                        class="project-img"
+                        src="img/project-one.mov"
+                        controls
+                        playsinline
+                        preload="metadata"
+                    ></video>
+
+                    <div class="project-info">
+                        <span class="project-num">01</span>
+                        <h2 class="project-title">Active House Video</h2>
+                        <p class="project-meta">Video Editing &middot; 2026</p>
+                        <p>
+                            My first video project. Features shots I took of my organization members, filmed in shoot locations and outfits I planned and executed to achieve a brand identity.
+                        </p>
+                        <a href="https://www.instagram.com/p/DdC_ILpNFhN/" class="project-link" target="_blank" rel="noopener noreferrer">View project</a>
+                    </div>
+                </article>
+
+                <article class="project reverse">
+                    <div class="carousel">
+                        <button class="carousel-btn prev" aria-label="Previous photo">&larr;</button>
+
+                        <div class="carousel-track">
+                            <img src="img/project-two.png" alt="Kappas introduction graphic." class="carousel-slide" />
+                            <img src="img/project-two-b.png" alt="Describe photo b." class="carousel-slide" />
+                            <img src="img/project-two-c.png" alt="Describe photo c." class="carousel-slide" />
+                            <img src="img/project-two-d.png" alt="Describe photo d." class="carousel-slide" />
+                            <img src="img/project-two-e.png" alt="Describe photo e." class="carousel-slide" />
+                        </div>
+
+                        <button class="carousel-btn next" aria-label="Next photo">&rarr;</button>
+                    </div>
+
+                    <div class="project-info">
+                        <span class="project-num">02</span>
+                        <h2 class="project-title">Who Are Kappas?</h2>
+                        <p class="project-meta">Graphic Design &middot; 2026</p>
+                        <p>
+                            Graphics introducing my org. I experimented heavily with grid designs here.
+                        </p>
+                        <a href="https://www.instagram.com/p/DcuXgP1lWzx/?img_index=1" class="project-link" target="_blank" rel="noopener noreferrer">View project</a>
+                    </div>
+                </article>
+
+                <article class="project">
+                    <div class="carousel">
+                        <button class="carousel-btn prev" aria-label="Previous photo">&larr;</button>
+
+                        <div class="carousel-track">
+                            <img src="img/project-three.png" alt="Graphic introducing executive and minor board for Kappa Phi Lambda." class="carousel-slide" />
+                            <img src="img/project-three-b.png" alt="Graphic of executive board members." class="carousel-slide" />
+                            <img src="img/project-three-c.png" alt="Graphic listing minor board members." class="carousel-slide" />
+                        </div>
+
+                        <button class="carousel-btn next" aria-label="Next photo">&rarr;</button>
+                    </div>
+
+                    <div class="project-info">
+                        <span class="project-num">03</span>
+                        <h2 class="project-title">Kappas E-Board</h2>
+                        <p class="project-meta">Graphic Design &middot; 2026</p>
+                        <p>
+                            My first graphic as Head Public Relations of my school org. It reached 17.6K people.
+                        </p>
+                        <a href="https://www.instagram.com/p/DbRAdUGms_a/?img_index=1" class="project-link" target="_blank" rel="noopener noreferrer">View project</a>
+                    </div>
+                </article>
+            </div>
+        </main>
+
+        <footer>
+            <a href="https://www.linkedin.com/in/vvyle/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:vvyle5002@gmail.com">Email</a>
+            <a href="https://www.instagram.com/v.yyle/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </footer>
+
+    <script>
+        document.querySelectorAll(".carousel").forEach((carousel) => {
+            const track = carousel.querySelector(".carousel-track");
+            const prev = carousel.querySelector(".prev");
+            const next = carousel.querySelector(".next");
+
+            const update = () => {
+            const max = track.scrollWidth - track.clientWidth;
+            prev.classList.toggle("hidden", track.scrollLeft <= 5);
+            next.classList.toggle("hidden", track.scrollLeft >= max - 5);
+            };
+
+            prev.addEventListener("click", () =>
+            track.scrollBy({ left: -track.clientWidth, behavior: "smooth" })
+            );
+            next.addEventListener("click", () =>
+            track.scrollBy({ left: track.clientWidth, behavior: "smooth" })
+            );
+
+            track.addEventListener("scroll", update);
+            window.addEventListener("resize", update);
+            update();
+        });
+    </script>
+    </body>
+</html>
