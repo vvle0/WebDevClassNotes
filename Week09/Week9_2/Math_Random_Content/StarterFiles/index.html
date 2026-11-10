@@ -3,18 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Show Page</title>
+    <title>Random Album</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
 
   <body>
-    <!-- Where Tuesday ended, plus one new empty element: the lineup list.
-         If you kept your own file from Tuesday, use that one instead and just
-         copy the <section class="lineup-wrap"> block below into it. -->
-
     <article class="ticket">
       <header class="poster">
-        <p class="presents">The Fillmore East presents</p>
+        <p class="presents">Now spinning</p>
         <h1 class="billing" id="billing"></h1>
         <p class="where-when" id="where-when"></p>
       </header>
@@ -22,81 +18,106 @@
       <p class="status" id="status"></p>
 
       <section class="order">
-        <h2>Your order</h2>
+        <h2>Album stats</h2>
 
         <p class="line" id="price-line"></p>
         <p class="line" id="fee-line"></p>
         <p class="line discount" id="discount-line"></p>
 
         <p class="total">
-          <span>Total</span>
+          <span>Total time</span>
           <strong id="total"></strong>
         </p>
 
         <p class="fine-print" id="fine-print"></p>
       </section>
 
-      <!-- NEW today -->
       <section class="lineup-wrap">
-        <h2>Running order</h2>
+        <h2>Tracklist</h2>
         <ul class="lineup" id="lineup"></ul>
         <p class="tagline" id="tagline"></p>
       </section>
     </article>
 
     <script>
-      /* ---------- Tuesday's code, so nobody is stuck ----------
-         Everything below is where we finished last class. Today we replace
-         the hard-coded facts at the top with randomly chosen ones. */
+      /* ---------- Arrays ---------- */
+      const albums = ['The Most Beautiful Moment in Life Pt.1', 'The Most Beautiful Moment in Life Pt.2', 'The Most Beautiful Moment in Life: Young Forever', 'Wings', 'You Never Walk Alone', 'Love Yourself: Her', 'Love Yourself: Tear', 'Love Yourself: Answer', 'Map of the Soul: Persona', 'Map of the Soul: 7', 'BE']
+      const artists = ['BTS']
+      const songTitles = [
+        'Intro: The Most Beautiful Moment in Life', 'Boyz with Fun', 'Converse High', 'Moving On', 'Outro: Love is Not Over', 'Run', 'Butterfly', 'Whalien 52', 'Ma City', 'Silver Spoon', 'I Need U', 'Hold Me Tight', 'Dope', 'Danger', 'Fire', 'Save Me', 'Epilogue: Young Forever', 'DNA', 'Dimple', 'Pied Piper', 'Mic Drop', "Make It Right", "Home", "Black Swan", "ON", "We are Bulletproof: the Eternal", "Life Goes On"
+      ]
+      const genres = ['K-pop', 'Pop', 'Hip-hop', 'R&B', 'Dance', 'Electronic']
+      const moods = ['Chill vibes', 'Party time', 'Emotional rollercoaster', 'Feel-good tunes', 'Late-night listening', 'Upbeat and energetic', 'Melancholic melodies', 'Romantic serenade', 'Epic anthems', 'Experimental sounds']
+      const accents = ['#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#8E44AD', '#E74C3C', '#1ABC9C', '#2ECC71', '#3498DB']
 
-      const headliner = 'Bad Moon Rising'
-      const support = 'The Paper Cuts'
-      const venue = 'The Fillmore East'
-      const doors = 'Fri 13 Nov, doors 8pm'
+      function pickRandom(list) {
+        const index = Math.floor(Math.random() * list.length)
+        return list[index]
+      }
 
-      const ticketPrice = 18.5
-      const capacity = 250
-      const ticketsSold = 243
-      const serviceFeeRate = 0.12
-      const studentPrice = 5
+      function randomBetween(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
 
-      const isStudent = true
-      let quantity = 3
+      const album = pickRandom(albums)
+      const artist = pickRandom(artists)
+      const genre = pickRandom(genres)
+      const releaseYear = randomBetween(2015, 2026)
 
-      const ticketsLeft = capacity - ticketsSold
-      const isSoldOut = ticketsLeft === 0
-      const isAlmostSoldOut = ticketsLeft < 10
+      const trackCount = randomBetween(1, 8)
+      const avgSongMinutes = randomBetween(2, 5) + 0.5
+      const streamsMillions = randomBetween(1, 900)
+      const hasExplicit = randomBetween(0, 1) === 1
 
-      const subtotal = ticketPrice * quantity
-      const serviceFee = subtotal * serviceFeeRate
-      const discount = isStudent ? studentPrice : 0
-      const total = subtotal + serviceFee - discount
+      const totalMinutes = trackCount * avgSongMinutes
+      const hours = Math.floor(totalMinutes / 60)
+      const leftoverMinutes = Math.round(totalMinutes % 60)
+      const streamsPerTrack = streamsMillions / trackCount
 
-      const billing = `${headliner.toUpperCase()} + ${support}`
-      const whereWhen = `${venue} · ${doors}`
+      const isShort = totalMinutes < 15
+      const isViral = streamsMillions > 500
+      const isClassic = releaseYear < 2020
 
       let status
 
-      if (isSoldOut) {
-        status = 'Sold out — join the waiting list'
-      } else if (isAlmostSoldOut) {
-        status = `Hurry — only ${ticketsLeft} tickets left`
+      if (isViral) {
+        status = `Certified hit — ${streamsMillions}M streams`
+      } else if (isShort) {
+        status = 'Short and sweet — an EP'
       } else {
-        status = 'Tickets available'
+        status = 'A solid full listen'
       }
 
-      document.querySelector('#billing').textContent = billing
-      document.querySelector('#where-when').textContent = whereWhen
-      document.querySelector('#status').textContent = status
-      document.querySelector('#price-line').textContent = `${quantity} × $${ticketPrice.toFixed(2)}  —  $${subtotal.toFixed(2)}`
-      document.querySelector('#fee-line').textContent = `Service fee  —  $${serviceFee.toFixed(2)}`
-      document.querySelector('#discount-line').textContent = isStudent
-        ? `Student discount  —  −$${discount.toFixed(2)}`
-        : ''
-      document.querySelector('#total').textContent = `$${total.toFixed(2)}`
-      document.querySelector('#fine-print').textContent = `All sales final. ${ticketsLeft} of ${capacity} tickets remaining.`
+      const trackWord = trackCount === 1 ? 'track' : 'tracks'
+      const ageLine = isClassic ? 'Throwback pick' : 'Recent release'
+      const explicitLine = hasExplicit ? 'Explicit lyrics' : ''
 
-      /* ---------- Today's code goes below this line ---------- */
+      document.querySelector('#billing').textContent = `${album.toUpperCase()} — ${artist}`
+      document.querySelector('#where-when').textContent = `${genre} · ${releaseYear}`
+      document.querySelector('#status').textContent = status
+      document.querySelector('#price-line').textContent = `${trackCount} ${trackWord} × ${avgSongMinutes.toFixed(2)} min`
+      document.querySelector('#fee-line').textContent = `${streamsMillions}M streams  —  ${streamsPerTrack.toFixed(2)}M per track`
+      document.querySelector('#discount-line').textContent = explicitLine
+      document.querySelector('#total').textContent = hours > 0 ? `${hours}h ${leftoverMinutes}m` : `${leftoverMinutes} min`
+      document.querySelector('#fine-print').textContent = `${ageLine} · ${totalMinutes.toFixed(2)} minutes of music in total.`
+
+      let tracklistHTML = ''
+
+      for (let i = 0; i < trackCount; i++) {
+        const trackNumber = i + 1
+        const song = pickRandom(songTitles)
+        const length = randomBetween(2, 5)
+        const seconds = randomBetween(10, 59)
+        const stripe = i % 2 === 0 ? 'stripe' : ''
+        const isLast = i === trackCount - 1
+        const title = isLast ? `<span class="headline-act">${song}</span>` : song
+        tracklistHTML += `<li class="${stripe}"><span class="time">${trackNumber}.</span>${title} (${length}:${seconds})</li>`
+      }
+
+      document.querySelector('#lineup').innerHTML = tracklistHTML
+
+      document.body.style.setProperty('--accent', pickRandom(accents))
+      document.querySelector('#tagline').textContent = pickRandom(moods)
     </script>
   </body>
 </html>
