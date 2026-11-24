@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Location Map</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      border-radius: 8px;
+      border: 2px solid #d1d5db;
+    }
+
+    #status {
+      margin: 16px 0;
+      font-size: 18px;
+      color: #374151;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>My Location on a Map</h1>
+  <div id="status">Finding your location...</div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    const status = document.getElementById('status')
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(showOnMap, handleError)
+    } else {
+      status.textContent = 'Sorry, your browser does not support geolocation.'
+    }
+
+    function showOnMap(position) {
+      const lat = position.coords.latitude
+      const lon = position.coords.longitude
+
+      status.textContent = `Latitude: ${lat.toFixed(5)}, Longitude: ${lon.toFixed(5)}`
+
+      const map = L.map('map').setView([lat, lon], 15)
+
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(map)
+
+      L.circle([lat, lon], { radius: position.coords.accuracy }).addTo(map)
+
+      L.marker([lat, lon])
+        .addTo(map)
+        .bindPopup(`You are here!<br>${lat.toFixed(5)}, ${lon.toFixed(5)}`)
+        .openPopup()
+    }
+
+    function handleError(error) {
+      status.textContent = `Could not get your location: ${error.message}`
+      console.warn(error.code, error.message)
+    }
+  </script>
+
+</body>
+</html>

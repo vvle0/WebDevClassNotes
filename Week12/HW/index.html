@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Album</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <article class="ticket">
+      <header class="poster">
+        <p class="presents">Now spinning</p>
+        <h1 class="billing" id="billing"></h1>
+        <p class="where-when" id="where-when"></p>
+      </header>
+
+      <p class="status" id="status"></p>
+
+      <section class="order">
+        <h2>Album stats</h2>
+
+        <p class="line" id="price-line"></p>
+        <p class="line" id="fee-line"></p>
+        <p class="line discount" id="discount-line"></p>
+
+        <p class="total">
+          <span>Total time</span>
+          <strong id="total"></strong>
+        </p>
+
+        <p class="fine-print" id="fine-print"></p>
+      </section>
+
+      <section class="controls">
+        <h2>Controls</h2>
+        <button type="button" id="roll">Roll another album</button>
+        <button type="button" id="less">− Track</button>
+        <button type="button" id="more">+ Track</button>
+        <button type="button" id="clear">Clear saved</button>
+        <input type="text" id="search" placeholder="Search tracks..." />
+      </section>
+
+      <section class="lineup-wrap">
+        <h2>Tracklist</h2>
+        <ul class="lineup" id="lineup"></ul>
+        <p class="tagline" id="tagline"></p>
+      </section>
+
+      <section class="details-wrap">
+        <h2>Details</h2>
+        <ul class="details" id="details"></ul>
+      </section>
+    </article>
+
+    <script>
+      /*
+        PART B ANSWER (fill this in AFTER you test it, in your own words):
+
+        What I saw: 
+        Why it happened: 
+        What I would have to do about it: 
+      */
+
+      const albumMethods = {
+        minutesFor(n) {
+          return n * this.avgMinutes
+        },
+        statusFor(n) {
+          if (this.streamsMillions > 500) {
+            return `Certified hit — ${this.streamsMillions}M streams`
+          }
+          if (this.minutesFor(n) < 15) {
+            return 'Short and sweet — an EP'
+          }
+          return 'A solid full listen'
+        },
+      }
+
+      const albums = [
+        {
+          title: 'The Most Beautiful Moment in Life Pt.1',
+          artist: 'BTS',
+          genre: 'K-pop',
+          releaseYear: 2015,
+          avgMinutes: 3.5,
+          streamsMillions: 300,
+          hasExplicit: false,
+          accent: '#FF5733',
+          mood: 'Emotional rollercoaster',
+          tracks: ['Intro: The Most Beautiful Moment in Life', 'I Need U', 'Hold Me Tight', 'Dope', 'Boyz with Fun', 'Converse High', 'Moving On', 'Outro: Love is Not Over'],
+          ...albumMethods,
+        },
+        {
+          title: 'Love Yourself: Her',
+          artist: 'BTS',
+          genre: 'K-pop',
+          releaseYear: 2017,
+          avgMinutes: 3.5,
+          streamsMillions: 650,
+          hasExplicit: false,
+          accent: '#E74C3C',
+          mood: 'Feel-good tunes',
+          tracks: ['DNA', 'Dimple', 'Pied Piper', 'Mic Drop'],
+          ...albumMethods,
+        },
+        {
+          title: 'Map of the Soul: Persona',
+          artist: 'BTS',
+          genre: 'Pop',
+          releaseYear: 2019,
+          avgMinutes: 3.5,
+          streamsMillions: 800,
+          hasExplicit: false,
+          accent: '#8E44AD',
+          mood: 'Upbeat and energetic',
+          tracks: ['Boy With Luv', 'Make It Right', 'Home', 'Mikrokosmos'],
+          ...albumMethods,
+        },
+        {
+          title: 'Map of the Soul: 7',
+          artist: 'BTS',
+          genre: 'Hip-hop',
+          releaseYear: 2020,
+          avgMinutes: 4,
+          streamsMillions: 450,
+          hasExplicit: true,
+          accent: '#3357FF',
+          mood: 'Epic anthems',
+          tracks: ['Black Swan', 'ON', 'We are Bulletproof: the Eternal'],
+          ...albumMethods,
+        },
+        {
+          title: 'BE',
+          artist: 'BTS',
+          genre: 'Pop',
+          releaseYear: 2020,
+          avgMinutes: 3.5,
+          streamsMillions: 700,
+          hasExplicit: false,
+          accent: '#1ABC9C',
+          mood: 'Chill vibes',
+          tracks: ['Life Goes On', 'Dynamite', 'Telepathy', 'Blue & Grey'],
+          ...albumMethods,
+        },
+      ]
+
+      function pickRandom(list) {
+        return list[Math.floor(Math.random() * list.length)]
+      }
+
+      let currentAlbum = pickRandom(albums)
+      let tracksShown = currentAlbum.tracks.length
+      let query = ''
+
+      function saveState() {
+        const data = {
+          albumIndex: albums.indexOf(currentAlbum),
+          tracksShown: tracksShown,
+        }
+        localStorage.setItem('albumState', JSON.stringify(data))
+      }
+
+      function loadState() {
+        const raw = localStorage.getItem('albumState')
+        if (!raw) return 
+
+        const data = JSON.parse(raw)
+        const album = albums[data.albumIndex]
+        if (!album) return 
+
+        currentAlbum = album
+        tracksShown = Math.min(Math.max(data.tracksShown, 1), album.tracks.length)
+      }
+
+      function render() {
+        const a = currentAlbum
+        const total = a.minutesFor(tracksShown)
+        const hours = Math.floor(total / 60)
+        const leftover = Math.round(total % 60)
+        const trackWord = tracksShown === 1 ? 'track' : 'tracks'
+        const streamsPerTrack = a.streamsMillions / tracksShown
+        const ageLine = a.releaseYear < 2020 ? 'Throwback pick' : 'Recent release'
+
+        document.body.style.setProperty('--accent', a.accent)
+        document.querySelector('#billing').textContent = `${a.title.toUpperCase()} — ${a.artist}`
+        document.querySelector('#where-when').textContent = `${a.genre} · ${a.releaseYear}`
+        document.querySelector('#status').textContent = a.statusFor(tracksShown)
+        document.querySelector('#price-line').textContent = `${tracksShown} ${trackWord} × ${a.avgMinutes.toFixed(2)} min`
+        document.querySelector('#fee-line').textContent = `${a.streamsMillions}M streams  —  ${streamsPerTrack.toFixed(2)}M per track`
+        document.querySelector('#discount-line').textContent = a.hasExplicit ? 'Explicit lyrics' : ''
+        document.querySelector('#total').textContent = hours > 0 ? `${hours}h ${leftover}m` : `${leftover} min`
+        document.querySelector('#fine-print').textContent = `${ageLine} · ${total.toFixed(2)} minutes of music in total.`
+        document.querySelector('#tagline').textContent = a.mood
+
+        let html = ''
+        for (let i = 0; i < tracksShown; i++) {
+          const song = a.tracks[i]
+          if (!song.toLowerCase().includes(query.toLowerCase())) continue
+
+          const stripe = i % 2 === 0 ? 'stripe' : ''
+          const isLast = i === tracksShown - 1
+          const title = isLast ? `<span class="headline-act">${song}</span>` : song
+          html += `<li class="${stripe}"><span class="time">${i + 1}.</span>${title}</li>`
+        }
+        document.querySelector('#lineup').innerHTML = html || '<li>No tracks match your search.</li>'
+
+        document.querySelector('#less').disabled = tracksShown <= 1
+        document.querySelector('#more').disabled = tracksShown >= a.tracks.length
+
+        renderDetails()
+      }
+
+      function renderDetails() {
+        const list = document.querySelector('#details')
+        list.innerHTML = ''
+
+        const keys = Object.keys(currentAlbum)
+        for (let i = 0; i < keys.length; i++) {
+          const key = keys[i]
+          const value = currentAlbum[key]
+          if (typeof value === 'function' || key === 'tracks') continue
+
+          const li = document.createElement('li')
+          li.textContent = `${key}: ${value}`
+          list.appendChild(li)
+        }
+      }
+
+      document.querySelector('#roll').addEventListener('click', () => {
+        currentAlbum = pickRandom(albums)
+        tracksShown = currentAlbum.tracks.length
+        query = ''
+        document.querySelector('#search').value = ''
+        saveState()
+        render()
+      })
+
+      document.querySelector('#less').addEventListener('click', () => {
+        if (tracksShown > 1) tracksShown--
+        saveState()
+        render()
+      })
+
+      document.querySelector('#more').addEventListener('click', () => {
+        if (tracksShown < currentAlbum.tracks.length) tracksShown++
+        saveState()
+        render()
+      })
+
+      document.querySelector('#search').addEventListener('input', (event) => {
+        query = event.target.value
+        render()
+      })
+
+      document.querySelector('#clear').addEventListener('click', () => {
+        localStorage.removeItem('albumState')
+        currentAlbum = pickRandom(albums)
+        tracksShown = currentAlbum.tracks.length
+        query = ''
+        document.querySelector('#search').value = ''
+        render()
+      })
+
+      loadState()
+      render()
+    </script>
+  </body>
+</html>
